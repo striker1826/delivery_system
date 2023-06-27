@@ -48,7 +48,7 @@ ci : CI 관련 설정 수정에 대한 커밋
 
 docs : 문서 수정에 대한 커밋
 
-# Forder Structure
+# Folder Structure
 
 src
 
