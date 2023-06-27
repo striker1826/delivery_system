@@ -1,26 +1,16 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
-
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { fakeAuthRepository } from '../../../test/auth/auth.service.spec';
+import * as bcrypt from 'bcrypt';
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
-  }
+  async signUp(id: string, password: string) {
+    const user = await fakeAuthRepository.findUserById(id);
+    if (user) {
+      throw new BadRequestException('이미 존재하는 아이디 입니다');
+    }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await fakeAuthRepository.createUser(id, hashedPassword);
+    return;
   }
 }
