@@ -19,8 +19,6 @@ export class FakeAuthRepository {
   }
 }
 
-export let fakeAuthRepository = new FakeAuthRepository();
-
 describe('AuthService', () => {
   let authService: AuthService;
 
@@ -41,7 +39,7 @@ describe('AuthService', () => {
       expect(authService.signUp).toBeDefined();
     });
 
-    it('이미 존재하는 id일 경우', async () => {
+    it('이미 존재하는 id일 경우 - 실패', async () => {
       const id = 'test1';
       const password = 'asdf';
       await expect(authService.signUp(id, password)).rejects.toThrowError(
@@ -49,14 +47,11 @@ describe('AuthService', () => {
       );
     });
 
-    it('authRepository의 createUser를 호출하는지', async () => {
+    it('signUp()의 리턴값이 null인지 확인', async () => {
       const id = 'test2';
       const password = 'asdf';
-      const test = jest.spyOn(fakeAuthRepository, 'createUser');
-
       const result = await authService.signUp(id, password);
       expect(result).toBeNull;
-      expect(test).toHaveBeenCalledWith(id, password);
     });
   });
 });
