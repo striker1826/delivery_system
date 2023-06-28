@@ -2,6 +2,7 @@ import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from '../../src/modules/auth/auth.service';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 export class FakeAuthRepository {
   async findUserByUserId(id: string) {
     const password = '1234';
@@ -26,7 +27,7 @@ describe('AuthService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AuthService, FakeAuthRepository],
+      providers: [AuthService, FakeAuthRepository, JwtService],
     }).compile();
 
     authService = module.get<AuthService>(AuthService);
@@ -81,6 +82,22 @@ describe('AuthService', () => {
       const password = '1234';
 
       const result = await authService.login(id, password);
+      expect(result).toHaveProperty('access_token');
+      expect(result).toHaveProperty('refresh_token');
+    });
+  });
+
+  describe('generateJwt', () => {
+    const UserId = 1;
+
+    it('access_token 이라는 키를 받았을 경우 string을 리턴한다', () => {
+      const result = authService.generateJwt(UserId, 'access_token');
+      expect(typeof result).toEqual('string');
+    });
+
+    it('refresh_token 이라는 키를 받았을 경우 string을 리턴한다', () => {
+      const result = authService.generateJwt(UserId, 'refresh_token');
+      expect(typeof result).toEqual('string');
     });
   });
 });
