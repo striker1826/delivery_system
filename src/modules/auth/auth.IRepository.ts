@@ -1,8 +1,11 @@
-import { UserOutputDto } from './dto/output/User.output.dto';
+import { OwnerOutputDto } from "./dto/output/owner.output.dto";
+import { UserOutputDto } from "./dto/output/User.output.dto";
 
 export interface IAuthRepository {
-  findUserByUserId(UserId: string): Promise<UserOutputDto>;
-  createUser(id: string, password: string): Promise<void>;
+    findUserByUserId(UserId: string): Promise<UserOutputDto>;
+    createUser(id: string, password: string): Promise<void>;
+    findOwnerByOwnerId(ownerId: string): Promise<OwnerOutputDto>;
+    createOwner(ownerId: string, hashedPassword: string);
 }
 
-export const IAuthRepository = Symbol('IAuthRepository');
+export const IAuthRepository = Symbol("IAuthRepository");

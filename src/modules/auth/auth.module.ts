@@ -7,10 +7,11 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "../../entities/user.entity";
 import { JwtModule, JwtService } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
+import { Owner } from "../../entities/owner.entity";
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([User]),
+        TypeOrmModule.forFeature([User, Owner]),
         PassportModule,
         JwtModule.register({
             secret: process.env.JWT_ACCESS_SECRET,
