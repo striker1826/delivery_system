@@ -17,6 +17,7 @@ export class AuthService {
 
   async signUp(body: SignupInputDto) {
     const { userId, password } = body;
+
     const user = await this.authRepository.findUserByUserId(userId);
     if (user) {
       throw new BadRequestException('이미 존재하는 아이디 입니다');

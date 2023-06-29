@@ -1,6 +1,6 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { plainToInstance } from 'class-transformer';
-import { User } from 'src/entities/auth.entity';
+import { User } from '../../entities/user.entity';
 import { Repository } from 'typeorm';
 import { IAuthRepository } from './auth.IRepository';
 import { UserOutputDto } from './dto/output/User.output.dto';
