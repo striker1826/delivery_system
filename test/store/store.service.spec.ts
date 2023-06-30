@@ -7,6 +7,9 @@ export class FakeOwnerRepository {
         if (OwnerId === 1) {
             return {
                 id: 1,
+                name: "가게이름",
+                minimunPrice: 13000,
+                deliveryTip: 2000,
             };
         }
     }
@@ -14,6 +17,14 @@ export class FakeOwnerRepository {
 export class FakeStoreRepository {
     async createStore(ownerId, storeInfo): Promise<void> {
         return;
+    }
+
+    async findStoreById(StoreId: number) {
+        if (StoreId === 1) {
+            return {
+                id: 1,
+            };
+        }
     }
 }
 
