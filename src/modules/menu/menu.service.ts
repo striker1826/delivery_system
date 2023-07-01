@@ -15,4 +15,11 @@ export class MenuService {
         await this.menuRepository.createMenu(StoreId, menuInfo);
         return;
     }
+
+    async getMenuByStoreId(StoreId: number) {
+        const store = await this.storeRepository.findStoreById(StoreId);
+        if (!store) {
+            throw new BadRequestException("존재하지 않는 가게 입니다");
+        }
+    }
 }

@@ -43,4 +43,11 @@ describe("MenuService", () => {
             expect(result).toBeUndefined;
         });
     });
+
+    describe("메뉴 조회", () => {
+        it("존재하지 않는 가게일 경우", async () => {
+            const storeId = 999;
+            await expect(menuService.getMenuByStoreId(storeId)).rejects.toThrowError(new BadRequestException("존재하지 않는 가게 입니다"));
+        });
+    });
 });

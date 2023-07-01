@@ -23,6 +23,10 @@ export class FakeStoreRepository {
         if (StoreId === 1) {
             return {
                 id: 1,
+                menu: [
+                    { id: 1, name: "김치찌개", price: 8000 },
+                    { id: 2, name: "된장찌개", price: 9000 },
+                ],
             };
         }
     }
