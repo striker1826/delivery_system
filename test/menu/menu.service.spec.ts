@@ -44,10 +44,22 @@ describe("MenuService", () => {
         });
     });
 
-    describe("메뉴 조회", () => {
+    describe("메뉴리스트 조회", () => {
         it("존재하지 않는 가게일 경우", async () => {
             const storeId = 999;
             await expect(menuService.getMenuByStoreId(storeId)).rejects.toThrowError(new BadRequestException("존재하지 않는 가게 입니다"));
+        });
+
+        it("메뉴 리스트 조회 - 성공", async () => {
+            const storeId = 1;
+            const result = await menuService.getMenuByStoreId(storeId);
+            expect(result).toEqual({
+                id: 1,
+                menu: [
+                    { id: 1, name: "김치찌개", price: 8000 },
+                    { id: 2, name: "된장찌개", price: 9000 },
+                ],
+            });
         });
     });
 });
