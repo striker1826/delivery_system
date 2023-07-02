@@ -21,5 +21,6 @@ export class MenuService {
         if (!store) {
             throw new BadRequestException("존재하지 않는 가게 입니다");
         }
+        return store;
     }
 }
