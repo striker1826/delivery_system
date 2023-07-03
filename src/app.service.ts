@@ -3,6 +3,6 @@ import { Injectable } from "@nestjs/common";
 @Injectable()
 export class AppService {
     getHello(): string {
-        return "Hello Jenkins with docker-Compose!";
+        return "Hello Jenkins with Compose!";
     }
 }
