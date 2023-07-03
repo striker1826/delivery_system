@@ -1,5 +1,0 @@
-ssh ubuntu@13.114.50.40 <<EOF
-    exit
-EOF
-    
-    

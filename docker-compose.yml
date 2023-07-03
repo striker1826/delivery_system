@@ -1,0 +1,15 @@
+version: "3"
+services:
+    nodejs:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - 3000:3000
+        depends_on:
+            - database
+    database:
+        image: mysql:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: win1358!
+            MYSQL_DATABASE: compose-test

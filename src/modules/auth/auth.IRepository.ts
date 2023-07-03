@@ -1,5 +1,5 @@
 import { OwnerOutputDto } from "./dto/output/owner.output.dto";
-import { UserOutputDto } from "./dto/output/User.output.dto";
+import { UserOutputDto } from "./dto/output/user.output.dto";
 
 export interface IAuthRepository {
     findUserByUserId(UserId: string): Promise<UserOutputDto>;

@@ -3,7 +3,7 @@ import { plainToInstance } from "class-transformer";
 import { User } from "../../entities/user.entity";
 import { Repository } from "typeorm";
 import { IAuthRepository } from "./auth.IRepository";
-import { UserOutputDto } from "./dto/output/User.output.dto";
+import { UserOutputDto } from "./dto/output/user.output.dto";
 import { Owner } from "../../entities/owner.entity";
 import { OwnerOutputDto } from "./dto/output/owner.output.dto";
 
