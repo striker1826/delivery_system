@@ -11,7 +11,7 @@ RUN yarn install --frozen-lockfile
 COPY . .
 
 # 앱 빌드
-RUN yarn build
+RUN yarn run build
 
 # 앱 실행
-CMD [ "yarn", "start:prod" ]
+CMD [ "yarn", "run", "start:prod" ]
