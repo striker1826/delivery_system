@@ -1,1 +1,36 @@
+# .github/workflows/deploy.yml
+name: Deploy
 
+on:
+    push:
+        branches:
+            - develop
+    pull_request:
+        types:
+            - closed
+
+env:
+    AWS_REGION: ap-northeast-1
+    AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+    IMAGE_NAME: my-app
+    IMAGE_TAG: ${{ github.sha }}
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+
+            - name: Set up Docker Compose
+              run: |
+                  sudo apt-get update
+                  sudo apt-get install -y docker-compose
+
+            - name: Build and push Docker image to ECR
+              run: |
+                  aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
+                  docker-compose build
+                  docker tag ${IMAGE_NAME}:latest ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${IMAGE_NAME}:${IMAGE_TAG}
+                  docker push ${{ env.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${IMAGE_NAME}:${IMAGE_TAG}
