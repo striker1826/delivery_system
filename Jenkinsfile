@@ -1,36 +1,18 @@
 pipeline {
-    agent any
-    
+    agent any 
     stages {
         stage('Build') {
             steps {
-                // Docker Compose 빌드
-                script {
-                    def dockerImage = docker.build("deliverysystem", "-f docker-compose.yml .")
-                }
+                sh 'printenv'
             }
         }
-        
-        stage('Publish to ECR') {
-            environment {
-                AWS_REGION = 'ap-northeast-1'
-                AWS_ACCESS_KEY_ID = credentials('aws-access-key-id')
-                AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
-                ECR_REPO = 'delivery_system'
-            }
-            
+        stage('publish ECR') {
             steps {
-                // Docker 이미지 태그
-                script {
-                    dockerImage.tag("${env.ECR_REPO}:latest")
-                }
-                
-                // ECR에 로그인
-                script {
-                    docker.withRegistry('https://ap-northeast-1.amazonaws.com', 'ecr:ap-northeast-1:aws-ecr-credentials') {
-                        // ECR에 이미지 푸시
-                        dockerImage.push("${env.ECR_REPO}:latest")
-                    }
+                withEnv(["AWS_ACCESS_KEY_ID=${env.AWS_ACCESS_KEY_ID}", "AWS_SECRET_ACCESS_KEY=${env.AWS_SECRET_ACCESS_KEY}", "AWS_DEFAULT_REGION=${env.AWS_DEFAULT_REGION}"]) {
+                    sh 'docker login -u AWS -p $(aws ecr get-login-password --region ap-northeast-1) 347562501614.dkr.ecr.ap-northeast-1.amazonaws.com'
+                    sh 'docker build -t delivery_system .'
+                    sh 'docker tag delivery_system:latest 347562501614.dkr.ecr.ap-northeast-1.amazonaws.com/delivery_system:latest'
+                    sh 'docker push 347562501614.dkr.ecr.ap-northeast-1.amazonaws.com/delivery_system:latest'
                 }
             }
         }
