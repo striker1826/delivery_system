@@ -6,6 +6,11 @@ export class FakeMenuRepository {
     async createMenu(StoreId: number, menuInfo): Promise<void> {
         return;
     }
+
+    async findMenuByMenuId(menuId: number) {
+        const menu = { id: 1, name: "마라탕", price: 15000 };
+        return menu;
+    }
 }
 
 describe("MenuService", () => {

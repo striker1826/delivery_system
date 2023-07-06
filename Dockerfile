@@ -1,4 +1,4 @@
-FROM node:16.14-alpine
+FROM node:16.14
 
 # 앱 디렉토리 생성 및 설정
 WORKDIR /app
@@ -13,5 +13,6 @@ COPY . .
 # 앱 빌드
 RUN yarn run build
 
+EXPOSE 3000
 # 앱 실행
 CMD [ "yarn", "run", "start:prod" ]
