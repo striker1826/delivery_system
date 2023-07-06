@@ -23,4 +23,12 @@ export class MenuService {
         }
         return store;
     }
+
+    async getMenuByMenuId(menuId: number) {
+        const menu = await this.menuRepository.findMenuByMenuId(menuId);
+        if (!menu) {
+            throw new BadRequestException("존재하지 않는 메뉴 입니다");
+        }
+        return menu;
+    }
 }

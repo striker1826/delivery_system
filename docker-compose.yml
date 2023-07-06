@@ -1,15 +1,36 @@
-version: "3"
+version: "3.8"
 services:
-    nodejs:
-        build:
-            context: .
-            dockerfile: Dockerfile
-        ports:
-            - 3000:3000
-        depends_on:
-            - database
     database:
-        image: mysql:latest
+        image: mysql:8.0
+        container_name: local-db
+        restart: always
         environment:
-            MYSQL_ROOT_PASSWORD: win1358!
-            MYSQL_DATABASE: compose-test
+            MYSQL_ROOT_PASSWORD: A123456*
+            MYSQL_DATABASE: test
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: 1234*A
+        ports:
+            - "3010:3306"
+        volumes:
+            - ./data/mysql:/var/lib/mysql
+
+    # nestjs:
+    #     build:
+    #         context: .
+    #         dockerfile: Dockerfile
+    #     ports:
+    #         - 3000:3000
+    #     environment:
+    #         MYSQL_HOST: "127.0.0.1"
+    #         MYSQL_PORT: 3010
+    #         MYSQL_USER: admin
+    #         MYSQL_PASSWORD: 1234*A!
+    #         MYSQL_DATABASE: test
+    #     depends_on:
+    #         - database
+# networks:
+#     - test
+# volumes:
+#     mysql-data:
+# networks:
+#     test:
