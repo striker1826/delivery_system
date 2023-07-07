@@ -19,6 +19,10 @@ export class FakeStoreRepository {
         return;
     }
 
+    async getStoreList() {
+        return [];
+    }
+
     async findStoreById(StoreId: number) {
         if (StoreId === 1) {
             return {
@@ -68,6 +72,13 @@ describe("StoreService", () => {
 
             const result = await storeService.createStore(OwnerId, storeInfo);
             expect(result).toBeUndefined;
+        });
+    });
+
+    describe("getStoreList", () => {
+        it("storeList 조회", async () => {
+            const result = await storeService.getStoreList();
+            expect(result).toEqual([]);
         });
     });
 });
