@@ -14,4 +14,8 @@ export class StoreService {
         await this.storeRepository.createStore(OwnerId, storeInfo);
         return;
     }
+
+    async getStoreList() {
+        return await this.storeRepository.getStoreList()
+    }
 }
